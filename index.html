@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#143B3A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="지간3 평가">
+<title>지역사회간호학3 평가</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+:root{--pine:#143B3A;--pine2:#1E4E4C;--bg:#F2F5F1;--card:#FFFFFF;--line:#D3DDD8;--ink:#1C2B2A;--muted:#5A6B68;--amber:#D9822B;--amberT:#9A5212;--tint:#FBEAD6;--ok:#2F7D45;--okT:#E3F1E6;--no:#B8342A;--noT:#F8E1DE}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:17px;line-height:1.6;padding-bottom:env(safe-area-inset-bottom)}
+header{background:var(--pine);color:#F2F5F1;padding:calc(14px + env(safe-area-inset-top)) 20px 14px;position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px}
+header .t{font-weight:800;font-size:18px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header button{background:none;border:0;color:#F2F5F1;font-size:15px;font-family:inherit;padding:6px 8px;cursor:pointer}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:24px;margin:8px 0 4px;line-height:1.35}
+h2{font-size:19px;margin:24px 0 10px}
+.muted{color:var(--muted);font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0}
+.quiz-item{display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .08s}
+.quiz-item:active{transform:scale(.99)}
+.badge{min-width:52px;height:52px;border-radius:12px;background:var(--pine);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;text-align:center;line-height:1.1}
+.badge.diag{background:var(--amber)}
+.qi-body{flex:1;min-width:0}
+.qi-title{font-weight:700}
+.chip{display:inline-block;font-size:13px;padding:2px 10px;border-radius:99px;background:var(--okT);color:var(--ok);font-weight:700}
+.chip.todo{background:#EEF1EF;color:var(--muted)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;background:var(--pine);color:#fff}
+.btn.sec{background:#fff;color:var(--pine);border:1.5px solid var(--pine)}
+.btn.amber{background:var(--amber)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px}.row>*{flex:1}
+input{width:100%;font-size:17px;font-family:inherit;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;margin:6px 0 14px}
+input:focus{outline:none;border-color:var(--pine)}
+label{font-weight:700;font-size:15px}
+.progress{height:8px;background:#DDE5E1;border-radius:99px;overflow:hidden;margin:6px 0 18px}
+.progress>div{height:100%;background:var(--amber);transition:width .2s}
+.qtext{font-size:19px;font-weight:700;line-height:1.55;margin:4px 0 16px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px;margin:9px 0;font-size:17px;font-family:inherit;color:var(--ink);cursor:pointer;line-height:1.5}
+.opt .n{font-weight:800;color:var(--pine);min-width:22px}
+.opt.sel{border-color:var(--pine);background:#E6EFEC;box-shadow:inset 0 0 0 1px var(--pine)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px;margin:14px 0}
+.grid button{height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;color:var(--ink)}
+.grid button.done{background:var(--pine);color:#fff;border-color:var(--pine)}
+.grid button.cur{outline:3px solid var(--amber);outline-offset:1px}
+.score{text-align:center;padding:26px 18px}
+.score .big{font-size:64px;font-weight:800;color:var(--pine);line-height:1}
+.score .big small{font-size:22px}
+.res{border-left:5px solid var(--ok)}
+.res.x{border-left-color:var(--no)}
+.res .h{display:flex;gap:8px;align-items:center;font-weight:800;margin-bottom:6px}
+.mark{font-size:13px;padding:2px 10px;border-radius:99px;font-weight:800}
+.mark.o{background:var(--okT);color:var(--ok)}.mark.x{background:var(--noT);color:var(--no)}
+.ans{font-size:15px;margin:6px 0}
+.exp{background:#F6F8F6;border-radius:10px;padding:10px 12px;font-size:15px;margin-top:8px}
+.ref{display:inline-block;margin-top:8px;font-size:14px;font-weight:700;color:var(--amberT);background:var(--tint);padding:3px 10px;border-radius:8px}
+.banner{background:var(--tint);color:var(--amberT);border-radius:12px;padding:12px 14px;font-size:15px;margin:10px 0}
+.banner.err{background:var(--noT);color:var(--no)}
+.spin{width:36px;height:36px;border:4px solid #DDE5E1;border-top-color:var(--pine);border-radius:50%;animation:s 0.8s linear infinite;margin:30px auto}
+@keyframes s{to{transform:rotate(360deg)}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{background:#E9EFEB;position:sticky;top:0}
+.tbl{overflow-x:auto;max-height:420px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.bars{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px}
+.bar{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:13px}
+.bar b{display:block;font-size:18px}
+.bar.low b{color:var(--no)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--pine)}
+select{font-size:16px;font-family:inherit;padding:10px;border-radius:10px;border:1.5px solid var(--line);width:100%;margin:8px 0;background:#fff}
+.foot{text-align:center;font-size:13px;color:var(--muted);margin-top:30px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header><button id="back" class="hidden" aria-label="뒤로">← 목록</button><div class="t" id="htitle">지역사회간호학3 평가</div><button id="me" class="hidden"></button></header>
+<main id="app"></main>
+<script>
+const QUIZZES = [{"id": "0", "title": "1주차 진단평가", "sub": "이번 학기 출발점 확인 · 20문항 · 약 15분", "items": [{"q": "WHO 환경위생전문위원회가 규정한 환경위생의 핵심 내용으로 옳은 것은?", "o": ["질병 치료를 위한 의료환경 관리", "인간의 발육·건강·생존에 해로운 물리적 환경 요소의 통제", "사회경제적 불평등의 해소", "개인위생 습관의 교정", "산업장 작업환경의 측정"]}, {"q": "실내공기 오염의 지표로 사용되는 물질은?", "o": ["산소", "질소", "아르곤", "오존", "이산화탄소"]}, {"q": "연탄가스 중독의 원인 물질과 기전이 바르게 연결된 것은?", "o": ["CO₂ - 호흡중추 억제", "SO₂ - 폐포 손상", "NO₂ - 기관지 수축", "CO - 혈색소와 결합하여 산소운반 방해", "O₃ - 적혈구 용혈"]}, {"q": "환기가 불량한 실내에 많은 사람이 있을 때 두통·구역·현기증이 나타나는 현상의 예방법으로 가장 중요한 것은?", "o": ["실내 조명 강화", "실내 온도 상승", "적절한 환기", "공기청정기 가동 중지", "가습기 사용"]}, {"q": "먹는물의 분변오염 지표로 사용되는 것은?", "o": ["대장균군", "탁도", "경도", "잔류염소", "수소이온농도"]}, {"q": "유기수은에 오염된 어패류 섭취로 발생한 공해병은?", "o": ["미나마타병", "이타이이타이병", "레이노병", "진폐증", "잠함병"]}, {"q": "불쾌지수 산출에 사용되는 요소로 옳은 것은?", "o": ["기온, 기류", "기온, 기압", "기습, 복사열", "기류, 복사열", "기온, 기습"]}, {"q": "광화학 반응으로 생성되는 대표적인 2차 대기오염물질은?", "o": ["아황산가스", "일산화탄소", "오존", "분진", "매연"]}, {"q": "내분비계 교란물질(환경호르몬)에 해당하는 것은?", "o": ["비타민 D", "인슐린", "염화나트륨", "비스페놀 A", "포도당"]}, {"q": "통조림·소시지 등 혐기성 식품에서 발생하며 신경마비로 치명률이 높은 식중독은?", "o": ["살모넬라 식중독", "보툴리누스 식중독", "포도상구균 식중독", "장염비브리오 식중독", "노로바이러스 식중독"]}, {"q": "재난관리 단계를 순서대로 바르게 나열한 것은?", "o": ["대비-예방-대응-복구", "예방-대비-대응-복구", "예방-대응-대비-복구", "대응-복구-예방-대비", "대비-대응-예방-복구"]}, {"q": "우리나라 재난관리 체계의 기본이 되는 법률은?", "o": ["응급의료에 관한 법률", "지역보건법", "재난 및 안전관리 기본법", "국민건강증진법", "의료법"]}, {"q": "2015년 중동호흡기증후군(MERS) 유입·확산은 재난 유형 중 무엇에 해당하는가?", "o": ["사회재난", "자연재난", "해외재난", "인적재난", "특수재난"]}, {"q": "재난 현장 중증도 분류에서 적색(빨강)이 의미하는 것은?", "o": ["사망 또는 생존 가능성 희박", "수 시간 내 처치 필요", "걸을 수 있는 경상", "수 분 이내 처치가 필요한 긴급", "귀가 가능"]}, {"q": "START 분류에서 사정하는 RPM에 해당하지 않는 것은?", "o": ["호흡", "관류", "의식상태", "요골맥박/모세혈관 재충혈", "체온"]}, {"q": "감염병에 걸린 사람을 전염성이 있는 기간 동안 분리하는 조치는?", "o": ["검역", "시민 구류", "격리", "대피명령", "교통규제"]}, {"q": "외상 후 스트레스장애(PTSD) 진단 시 증상의 지속기간 기준은?", "o": ["1주 이상", "1개월 이상", "2주 이상", "3개월 이상", "6개월 이상"]}, {"q": "보건교육 학습목표 진술 방법으로 가장 적절한 것은?", "o": ["재난의 중요성을 이해한다", "대피 요령을 안다", "재난에 관심을 가진다", "가정용 비상물품 5가지를 열거할 수 있다", "안전의식을 높인다"]}, {"q": "지역사회 간호과정의 첫 단계는?", "o": ["사정", "계획", "수행", "평가", "진단"]}, {"q": "역학적 삼각형 모형의 3요소는?", "o": ["인구-환경-자원", "개인-가족-지역사회", "예방-치료-재활", "유전-생활습관-의료", "병원체-숙주-환경"]}]}, {"id": "2", "title": "2주차 형성평가", "sub": "환경보건의 이해와 대기·물·식품 · 10문항 · 약 10분", "items": [{"q": "불쾌지수에 대한 설명으로 옳은 것은?", "o": ["기온·기습·기류로 산출한다", "습도 100%를 기준으로 한다", "실외 불쾌감을 정확히 반영한다", "70 이상이면 모든 사람이 불쾌하다", "기류와 복사열을 고려하지 않는다"]}, {"q": "겨울철 난방을 하며 창문을 닫은 교실에서 학생들이 두통과 구역을 호소한다. 가장 우선적인 조치는?", "o": ["실내 온도를 높인다", "가습기를 가동한다", "조명을 밝게 한다", "창문을 열어 환기한다", "학생에게 수분을 섭취시킨다"]}, {"q": "여름철 맑은 날 오후, 자동차 통행이 많은 도시에서 주로 발생하는 오염물질은?", "o": ["오존", "아황산가스", "일산화탄소", "매연", "불화수소"]}, {"q": "하천의 오염이 심해질 때 나타나는 변화로 옳은 것은?", "o": ["DO 증가, BOD 증가", "DO 감소, BOD 감소", "DO 감소, BOD 증가", "DO 증가, BOD 감소", "DO와 BOD 모두 변화 없음"]}, {"q": "김밥 섭취 2시간 후 집단으로 구토가 발생했고 조리자의 손에 화농성 상처가 있었다. 원인균의 특징은?", "o": ["고열이 주 증상이다", "장독소가 열에 강하다", "잠복기가 12~24시간이다", "호염성균이다", "신경마비가 나타난다"]}, {"q": "런던 콜레라 유행 때 환자 발생과 식수의 관련성을 밝혀 최초의 역학조사를 실시한 인물은?", "o": ["히포크라테스", "라마치니", "존 스노우", "채드윅", "페텐코퍼"]}, {"q": "폐포까지 침투해 혈액으로 흡수될 수 있어 호흡기뿐 아니라 심혈관질환 위험도 높이는 대기오염물질은?", "o": ["PM-2.5(초미세먼지)", "PM-10(미세먼지)", "아황산가스", "일산화탄소", "이산화질소"]}, {"q": "겨울철 새벽, 석탄 연소가 많은 지역에서 복사성 역전으로 발생하는 스모그의 특징은?", "o": ["습도가 70% 이하로 낮다", "아황산가스와 매연이 주원인이다", "자동차 배기가스의 NOx가 주원인이다", "강한 자외선이 있어야 생긴다", "여름 낮에 주로 발생한다"]}, {"q": "오존층 파괴물질(프레온가스 등)을 규제하는 국제협약은?", "o": ["교토의정서", "파리협정", "바젤협약", "몬트리올 의정서", "람사르협약"]}, {"q": "상수도 염소소독에 대한 설명으로 옳은 것은?", "o": ["잔류효과가 없다", "침전 이전 단계에서 시행한다", "소독부산물이 생기지 않는다", "다른 소독법보다 비용이 비싸다", "급수전에서 유리잔류염소를 0.1mg/L 이상 유지한다"]}]}, {"id": "3", "title": "3주차 형성평가", "sub": "생활환경·유해화학물질, 토양·폐기물 · 10문항 · 약 10분", "items": [{"q": "새로 지은 아파트에 입주한 가족이 눈 따가움, 두통, 피부 가려움을 호소한다. 간호사의 교육 내용으로 가장 적절한 것은?", "o": ["실내를 밀폐해 외부 오염물질을 차단한다", "방향제로 냄새를 없앤다", "공기청정기만 사용하고 창문은 닫는다", "실내 습도를 90% 이상으로 높인다", "난방 후 환기를 반복하는 베이크아웃을 시행한다"]}, {"q": "토양이나 암석에서 발생하는 무색·무취의 방사성 기체로 흡연 다음의 폐암 원인으로 알려진 것은?", "o": ["라돈", "포름알데히드", "일산화탄소", "오존", "석면"]}, {"q": "만성 중독 시 빈혈, 염기성 과립 적혈구, 코프로포르피린뇨, 잇몸의 청회색 선이 나타나는 물질은?", "o": ["수은", "카드뮴", "납", "크롬", "벤젠"]}, {"q": "응급실에서 사용한 주사바늘의 처리로 옳은 것은?", "o": ["뚜껑을 다시 씌워 일반의료폐기물로 버린다", "손상성 폐기물 전용용기에 재캡핑하지 않고 버린다", "격리의료폐기물로 분류한다", "생활폐기물과 함께 버린다", "소독 후 재사용한다"]}, {"q": "토양오염의 특성으로 옳지 않은 것은?", "o": ["물과 농작물을 거쳐 간접적으로 영향을 준다", "오염을 인지하기 어렵다", "오염물질이 축적된다", "오염 즉시 급성 증상이 나타난다", "한번 오염되면 회복이 어렵다"]}, {"q": "건강한 주택의 실내 적정 온도와 습도로 옳은 것은?", "o": ["14±2℃, 20~30%", "25±2℃, 30~40%", "22±2℃, 70~90%", "18±2℃, 40~70%", "16±2℃, 80~90%"]}, {"q": "환경호르몬(내분비계 교란물질)에 대한 교육의 우선 대상으로 가장 적절한 집단은?", "o": ["20대 남성", "중년 사무직 근로자", "대학생", "운동선수", "임부와 영유아가 있는 가정"]}, {"q": "원인을 알 수 없는 중증 폐질환이 지역의 임산부·영유아에게 잇따라 발생할 때 지역사회간호사의 우선 행동은?", "o": ["개별 사례로 보고 경과만 관찰한다", "모든 가정에 항생제 복용을 권고한다", "생활환경·생활제품 노출을 의심하고 보건당국에 보고한다", "언론에 먼저 공개한다", "가족의 유전력만 조사한다"]}, {"q": "의료폐기물이 포함되는 폐기물 분류는?", "o": ["생활폐기물", "지정폐기물", "건설폐기물", "사업장 일반폐기물", "재활용 폐기물"]}, {"q": "병동에서 이동식 방사선 촬영을 할 때 간호사가 지켜야 할 방사선 방호 원칙은?", "o": ["시간 단축, 거리 확보, 차폐", "선원에 가까이 선다", "노출 시간을 늘린다", "차폐 없이 빠르게 촬영한다", "촬영 중 환자의 손을 잡아준다"]}]}, {"id": "4", "title": "4주차 형성평가", "sub": "환경보건 간호사의 역할과 교육자료 · 10문항 · 약 10분", "items": [{"q": "지역사회간호사가 환경보건 영역에서 수행하는 역할로 가장 거리가 먼 것은?", "o": ["위험인구집단 확인", "환경 사정", "리스크 커뮤니케이션", "환경오염 배출업체에 대한 행정처분", "환경보건 자원 의뢰"]}, {"q": "같은 지역에서 폭염에 노출되었을 때 온열질환 위험이 가장 높은 대상은?", "o": ["실내 사무직 30대", "재택근무 중인 40대", "학교 급식실 영양사", "대학 도서관 이용 학생", "에어컨이 없는 옥탑방에 사는 독거노인"]}, {"q": "화학사고 발생 후 주민설명회에서 '확인된 사실과 아직 모르는 사실'을 구분해 솔직하게 공개했다. 적용한 리스크 커뮤니케이션 원칙은?", "o": ["신속성", "일관성", "개방성", "공감성", "비례성"]}, {"q": "보건교육 학습목표 진술로 가장 적절한 것은?", "o": ["미세먼지의 위험성을 이해한다", "보건용 마스크를 올바르게 착용하는 방법을 시범 보일 수 있다", "마스크의 중요성을 안다", "환경에 관심을 가진다", "건강한 생활을 한다"]}, {"q": "스마트폰 사용이 어려운 저시력 독거노인에게 폭염 대처법을 교육할 때 가장 적절한 매체는?", "o": ["큰 글씨의 1쪽 안내문과 가정방문 시 구두 설명", "글씨가 작은 소책자", "SNS 카드뉴스", "QR코드 동영상", "이메일 뉴스레터"]}, {"q": "환경유해요인 분류에서 폭염·한파·소음·방사선이 해당하는 요인은?", "o": ["물리적 요인", "화학적 요인", "생물학적 요인", "기계적 요인", "정신사회적 요인"]}, {"q": "'두통이 집에 있을 때만 심해진다'고 호소하는 대상자의 환경 사정에서 가장 우선 확인할 내용은?", "o": ["가족력", "운동 습관", "난방기구의 종류와 환기 상태", "최종 학력", "최근 해외여행력"]}, {"q": "리스크 커뮤니케이션에서 '정보의 내용'보다 더 중요하다고 강조되는 것은?", "o": ["정보의 양", "전문용어의 정확한 사용", "발표 횟수", "정보를 전달하는 사람에 대한 신뢰", "언론 노출 빈도"]}, {"q": "환경보건 자원으로 의뢰하기 위해 간호사가 파악해야 할 내용으로 가장 거리가 먼 것은?", "o": ["기관의 위치와 연락처", "사업의 목적과 내용", "이용 조건과 범위", "접촉 방법", "기관장의 학력과 경력"]}, {"q": "만성 호흡기질환 어르신을 위한 고농도 미세먼지 교육 카드에 반드시 포함할 요소로 가장 적절한 것은?", "o": ["미세먼지 입자 크기", "위험 신호와 도움 요청 방법", "대기환경기준 수치 목록", "미세먼지 생성 원리", "관련 국제협약"]}]}, {"id": "5", "title": "5주차 형성평가", "sub": "재난 법체계와 유형별 대응체계 · 10문항 · 약 10분", "items": [{"q": "재난관리 단계 중 대비단계의 활동에 해당하는 것은?", "o": ["재난위험지구 지정·관리", "재난대응 모의훈련 실시", "수색 및 구조활동", "피해조사 및 보상", "이재민 임시주거 제공"]}, {"q": "해외에서 입국한 여행객이 신종 감염병 환자와 접촉했으나 증상은 없다. 이 사람을 잠복기 동안 분리하는 조치는?", "o": ["검역", "격리", "시민 구류", "대피명령", "행동기준 격리"]}, {"q": "재난 현장의 이송 원칙으로 옳은 것은?", "o": ["모든 환자를 가장 가까운 병원으로 이송한다", "경상자를 근거리 병원으로 먼저 이송한다", "도착 순서대로 이송한다", "중상자는 근거리, 경상자는 원거리 병원으로 분산한다", "보행 가능한 환자를 우선 이송한다"]}, {"q": "START 분류에서 보행이 불가능하고 호흡수 24회/분, 요골맥박 촉지, 간단한 지시에 따르는 환자의 분류는?", "o": ["적색", "녹색", "황색", "흑색", "재분류 불필요"]}, {"q": "건물 붕괴 현장에서 호흡이 없는 성인의 기도를 개방하자 자발호흡이 시작되었다. 분류로 옳은 것은?", "o": ["흑색", "호흡 확인 후 흑색 유지", "황색", "녹색", "적색"]}, {"q": "재난을 정의할 때 핵심이 되는 개념은?", "o": ["지역의 대응 역량을 넘어 외부 도움이 필요한 상태", "자연현상으로 인한 피해만 해당", "사망자가 10명 이상 발생한 사건", "언론에 보도된 사건", "재산 피해액이 일정 금액 이상인 사건"]}, {"q": "대규모 정전으로 통신·의료 기능이 마비된 경우 해당하는 재난 유형은?", "o": ["자연재난", "재난에 해당하지 않는다", "해외재난", "복합 자연재난", "사회재난"]}, {"q": "풍수해에 대비해 지정하는 이재민 수용시설의 1인당 면적 기준은?", "o": ["1.0㎡ 이상", "2.0㎡ 이상", "3.3㎡ 이상", "5.0㎡ 이상", "10㎡ 이상"]}, {"q": "재난 현장 중증도 분류의 기본 원칙으로 옳은 것은?", "o": ["가장 위중한 환자에게 모든 자원을 집중한다", "도착한 순서대로 치료한다", "분류는 한 번으로 끝낸다", "현재 자원으로 가장 많은 수의 환자를 살린다", "흑색 환자를 가장 먼저 이송한다"]}, {"q": "START 분류에서 보행이 불가능하고 호흡수가 34회/분인 환자의 분류는?", "o": ["녹색", "적색", "황색", "흑색", "분류 보류"]}]}, {"id": "6", "title": "6주차 형성평가", "sub": "취약인구집단의 재난 예방·대응·복구와 재난예방 교육 · 10문항 · 약 10분", "items": [{"q": "재난 발생 후 이재민 대피소에서 노인에게 가장 먼저 확인해야 할 사항은?", "o": ["취미 활동", "종교", "가족의 직업", "주택의 시가", "복용 중인 약과 남은 양"]}, {"q": "ICN이 제시한 재난 대응단계의 간호사 역할에 해당하는 것은?", "o": ["정책개발 및 계획", "취약계층 돌봄", "전문직 개발", "장기적 돌봄과 회복", "위험감소"]}, {"q": "감염병 대유행 시 백신 접종 우선순위를 노출 위험과 취약성에 따라 정했다. 적용된 윤리적 가치는?", "o": ["일관성", "투명성", "공정성", "비례성", "자율성"]}, {"q": "지역사회간호사가 관할 지역 재가 인공호흡기 사용자의 명부를 작성하고 정전 시 대피계획을 함께 세웠다. 해당하는 재난관리 단계는?", "o": ["대비단계", "예방단계", "대응단계", "복구단계", "재활단계"]}, {"q": "초등학생 대상 지진 대피 교육 방법으로 가장 효과적인 것은?", "o": ["지진의 원리에 대한 강의", "교과서 읽기 과제", "보호자 대상 가정통신문만 배부", "놀이와 반복 훈련을 통한 대피 행동 연습", "지진 피해 영상 시청만 실시"]}, {"q": "재난계획을 수립할 때 기준으로 삼아야 할 대상은?", "o": ["평균적인 주민", "건강한 성인", "가장 취약한 집단", "인구가 가장 많은 연령층", "자원봉사자"]}, {"q": "대응단계에서 간호사가 시행하는 초기 사정 항목에 해당하지 않는 것은?", "o": ["이재민의 정치적 성향", "영향받은 인구의 규모와 특성", "식수·하수 등 환경상태", "피해의 지리적 규모", "의료시설·물품 등 지역사회 자원"]}, {"q": "재난 복구·재활단계의 건강서비스로 옳은 것은?", "o": ["재해지도 제작", "수색과 구조", "예·경보체계 구축", "재난대응 모의훈련", "중단된 만성질환 관리의 재개"]}, {"q": "감염병 유행 시 학교 폐쇄 같은 제재를 재난의 심각성에 맞는 수준으로만 적용하는 윤리적 과정은?", "o": ["투명성", "비례성", "일관성", "책임성", "자율성"]}, {"q": "모든 가정을 대상으로 한 재난대비 교육에서 권장하는 비상용품 준비량은?", "o": ["최소 반나절분", "최소 1일분", "최소 1개월분", "최소 3일분", "준비할 필요 없음"]}]}, {"id": "7", "title": "7주차 형성평가", "sub": "재난의 심리사회적 영향과 위기 의사소통 · 10문항 · 약 10분", "items": [{"q": "수해 3개월 후 지원이 줄고 생계 문제가 현실이 되면서 주민들이 우울과 무력감, 두통, 수면장애를 호소한다. 정서회복 단계는?", "o": ["환멸단계", "허니문단계", "영웅단계", "재구성단계", "부정단계"]}, {"q": "외상 후 스트레스장애의 주요 증상에 해당하지 않는 것은?", "o": ["작은 소리에도 깜짝 놀란다", "사건 장면이 반복해서 떠오른다", "증상이 1주 이내에 완전히 사라진다", "감정이 무뎌진다", "관련 장소를 피한다"]}, {"q": "PTSD 약물치료에서 가장 광범위한 효능을 보이는 약물군은?", "o": ["이뇨제", "항생제", "스테로이드", "항히스타민제", "세로토닌 제제(SSRI)"]}, {"q": "대형 사고 환자를 치료한 응급실 간호사가 '나는 괜찮다'며 감정을 억누르고 있다. 가장 적절한 접근은?", "o": ["업무에 더 집중하도록 격려한다", "감정 표현은 전문성이 부족한 것임을 알린다", "즉시 정신과 입원을 권유한다", "반응이 정상임을 알리고 휴식과 동료 지지, 심리적 응급처치를 제공한다", "사건을 자세히 말하도록 강요한다"]}, {"q": "화학공장 폭발 직후 보건소가 주민에게 안내할 메시지로 가장 적절한 것은?", "o": ["모든 조사가 끝날 때까지 발표를 미룬다", "확인된 사실과 미확인 사항을 구분하고 '창문을 닫고 실내에 머무르세요'라는 행동 지침을 준다", "기관마다 각자 파악한 내용을 따로 발표한다", "불안을 막기 위해 위험성을 축소한다", "전문용어로 정확한 수치만 제시한다"]}, {"q": "재난 직후 잠을 못 자고 '내가 이상해진 것 같다'며 불안해하는 생존자에게 간호사의 첫 중재는?", "o": ["많은 사람이 겪는 정상적인 반응임을 알려준다", "수면제를 투여한다", "정신과 입원을 권유한다", "사건을 자세히 말하도록 한다", "외부 연락을 차단한다"]}, {"q": "재난 후 정서회복 단계를 순서대로 나열한 것은?", "o": ["허니문 → 영웅 → 환멸 → 재구성", "영웅 → 허니문 → 환멸 → 재구성", "영웅 → 환멸 → 허니문 → 재구성", "환멸 → 영웅 → 허니문 → 재구성", "재구성 → 영웅 → 허니문 → 환멸"]}, {"q": "외상 후 스트레스장애(PTSD) 진단을 위한 증상 지속기간 기준은?", "o": ["1일 이상", "1주 이상", "2주 이상", "1개월 이상", "1년 이상"]}, {"q": "심리적 응급처치(PFA)에서 적절한 행동은?", "o": ["'다 잘될 거예요'라고 약속한다", "사고 당시 경험을 자세히 말하도록 한다", "필요한 것을 묻고 경청한 뒤 서비스에 연결한다", "'살아서 다행'이라고 위로한다", "당장 안심시키기 위해 지킬 수 없는 약속을 한다"]}, {"q": "재난 환자가 몰린 병원에 가족 문의와 언론 취재가 폭주할 때의 원칙으로 옳은 것은?", "o": ["각 부서가 자유롭게 답변한다", "모든 문의에 응답하지 않는다", "환자 명단을 병원 입구에 게시한다", "담당 간호사가 언론에 직접 설명한다", "정보 창구를 일원화하고 환자 개인정보를 보호한다"]}]}];
+const CIRC = ['①','②','③','④','⑤'];
+const $app = document.getElementById('app');
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem('cn3_' + k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('cn3_' + k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem('cn3_' + k); }catch(e){} }
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const connected = () => /^https:\/\/script\.google(usercontent)?\.com\//.test(window.ENDPOINT || '');
+const findQ = id => QUIZZES.find(q => q.id === id);
+
+function header(title, back){
+  document.getElementById('htitle').textContent = title;
+  document.getElementById('back').classList.toggle('hidden', !back);
+  const st = LS.get('student', null), me = document.getElementById('me');
+  me.classList.toggle('hidden', !st);
+  if (st) me.textContent = st.name + ' ▾';
+  window.scrollTo(0, 0);
+}
+document.getElementById('back').onclick = () => { location.hash = '#/'; };
+document.getElementById('me').onclick = () => {
+  if (confirm('학번·이름을 다시 입력할까요? (이 기기에 저장된 응시 기록 표시는 지워집니다)')) { LS.del('student'); LS.del('done'); location.hash = '#/'; route(); }
+};
+
+/* ---------- 라우터 ---------- */
+function route(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const [page, id] = h.split('/');
+  if (page === 'admin') return viewAdmin();
+  if (!LS.get('student', null)) return viewLogin(h);
+  if (page === 'q' && findQ(id)) return viewStart(findQ(id));
+  if (page === 'solve' && findQ(id)) return viewSolve(findQ(id));
+  if (page === 'result' && findQ(id)) return viewSavedResult(findQ(id));
+  viewHome();
+}
+window.addEventListener('hashchange', route);
+
+/* ---------- 로그인 ---------- */
+function viewLogin(next){
+  header('지역사회간호학3 평가', false);
+  $app.innerHTML = `
+    <h1>진단평가·형성평가</h1>
+    <p class="muted">지역사회간호학3 · 간호학과 4학년. 처음 한 번만 학번과 이름을 입력하면 됩니다.</p>
+    ${connected() ? '' : '<div class="banner">아직 채점 서버가 연결되지 않은 미리보기입니다. 문항 확인은 가능하지만 제출은 되지 않습니다.</div>'}
+    <div class="card">
+      <label for="sid">학번</label><input id="sid" inputmode="numeric" autocomplete="off" placeholder="예: 20231234">
+      <label for="nm">이름</label><input id="nm" autocomplete="off" placeholder="예: 홍길동">
+      <button class="btn" id="go">시작하기</button>
+      <p class="muted" id="msg"></p>
+    </div>
+    <p class="foot">휴대폰에서는 브라우저 메뉴의 <b>홈 화면에 추가</b>를 누르면 앱처럼 쓸 수 있습니다.</p>`;
+  document.getElementById('go').onclick = () => {
+    const sid = document.getElementById('sid').value.trim(), name = document.getElementById('nm').value.trim();
+    if (!/^[0-9A-Za-z-]{4,20}$/.test(sid)) return document.getElementById('msg').textContent = '학번을 정확히 입력하세요 (숫자 4자리 이상).';
+    if (!name) return document.getElementById('msg').textContent = '이름을 입력하세요.';
+    LS.set('student', {sid, name});
+    location.hash = next ? '#/' + next : '#/';
+    route();
+  };
+}
+
+/* ---------- 홈 ---------- */
+function viewHome(){
+  header('지역사회간호학3 평가', false);
+  const st = LS.get('student'), done = LS.get('done', {});
+  $app.innerHTML = `
+    <h1>${esc(st.name)}님, 안녕하세요</h1>
+    <p class="muted">학번 ${esc(st.sid)} · 성적에는 반영되지 않으며, 모르는 부분을 확인하는 평가입니다.</p>
+    ${connected() ? '' : '<div class="banner">채점 서버 미연결(미리보기) · 교수님이 설정을 마치면 제출할 수 있습니다.</div>'}
+    <h2>평가 목록</h2>
+    ${QUIZZES.map(q => {
+      const d = done[q.id];
+      return `<div class="card quiz-item" data-id="${q.id}">
+        <div class="badge ${q.id==='0'?'diag':''}">${q.id==='0'?'진단':q.id+'주'}</div>
+        <div class="qi-body"><div class="qi-title">${esc(q.title)}</div><div class="muted">${esc(q.sub)}</div></div>
+        ${d ? `<span class="chip">${d.score}점</span>` : '<span class="chip todo">미응시</span>'}
+      </div>`; }).join('')}
+    <p class="foot">문의: 담당교수 이메일 · LMS 질의응답 게시판</p>`;
+  $app.querySelectorAll('.quiz-item').forEach(el => el.onclick = () => {
+    const id = el.dataset.id;
+    location.hash = LS.get('done', {})[id] ? '#/result/' + id : '#/q/' + id;
+  });
+}
+
+/* ---------- 시작 안내 ---------- */
+function viewStart(q){
+  header(q.title, true);
+  const saved = LS.get('draft_' + q.id, null);
+  $app.innerHTML = `
+    <h1>${esc(q.title)}</h1><p class="muted">${esc(q.sub)}</p>
+    <div class="card">
+      <p style="margin-top:0">✔ 교재나 인터넷을 보지 말고 지금 아는 만큼 풀어주세요.<br>
+      ✔ 한 문제씩 풀고, 아래 번호표로 언제든 이동할 수 있습니다.<br>
+      ✔ 제출하면 바로 점수·정답·해설${q.id==='0'?'':'과 관련 강의자료 슬라이드'}를 볼 수 있습니다.<br>
+      ✔ 중간에 앱을 닫아도 고른 답은 이 기기에 저장됩니다.</p>
+    </div>
+    <button class="btn" id="st">${saved ? '이어서 풀기' : '시작하기'}</button>`;
+  document.getElementById('st').onclick = () => { location.hash = '#/solve/' + q.id; };
+}
+
+/* ---------- 문제 풀이 ---------- */
+function viewSolve(q){
+  header(q.title, true);
+  const n = q.items.length;
+  let d = LS.get('draft_' + q.id, null) || {ans: Array(n).fill(0), i: 0};
+  const save = () => LS.set('draft_' + q.id, d);
+  function draw(){
+    const it = q.items[d.i], answered = d.ans.filter(Boolean).length;
+    $app.innerHTML = `
+      <div class="muted">${d.i + 1} / ${n} · 답한 문항 ${answered}개</div>
+      <div class="progress"><div style="width:${answered / n * 100}%"></div></div>
+      <div class="qtext">${d.i + 1}. ${esc(it.q)}</div>
+      ${it.o.map((o, j) => `<button class="opt ${d.ans[d.i] === j + 1 ? 'sel' : ''}" data-j="${j + 1}"><span class="n">${CIRC[j]}</span><span>${esc(o)}</span></button>`).join('')}
+      <div class="row" style="margin-top:16px">
+        <button class="btn sec" id="pv" ${d.i === 0 ? 'disabled' : ''}>이전</button>
+        ${d.i < n - 1 ? '<button class="btn" id="nx">다음</button>' : '<button class="btn amber" id="sb">제출하기</button>'}
+      </div>
+      <div class="grid">${d.ans.map((a, k) => `<button class="${a ? 'done' : ''} ${k === d.i ? 'cur' : ''}" data-k="${k}">${k + 1}</button>`).join('')}</div>
+      ${d.i < n - 1 ? '<button class="btn sec" id="sb2">답안 제출하기</button>' : ''}`;
+    $app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      d.ans[d.i] = Number(b.dataset.j); save();
+      if (d.i < n - 1) { setTimeout(() => { d.i++; save(); draw(); window.scrollTo(0, 0); }, 180); draw(); } else draw();
+    });
+    $app.querySelectorAll('.grid button').forEach(b => b.onclick = () => { d.i = Number(b.dataset.k); save(); draw(); });
+    const pv = document.getElementById('pv'); if (pv) pv.onclick = () => { d.i--; save(); draw(); };
+    const nx = document.getElementById('nx'); if (nx) nx.onclick = () => { d.i++; save(); draw(); window.scrollTo(0, 0); };
+    ['sb', 'sb2'].forEach(x => { const b = document.getElementById(x); if (b) b.onclick = submit; });
+  }
+  async function submit(){
+    const miss = d.ans.map((a, k) => a ? null : k + 1).filter(Boolean);
+    if (miss.length) { alert('아직 답하지 않은 문항이 있습니다: ' + miss.join(', ') + '번'); d.i = miss[0] - 1; save(); return draw(); }
+    if (!confirm('제출할까요? 제출 후에는 점수와 해설이 바로 표시됩니다.')) return;
+    if (!connected()) { alert('채점 서버가 아직 연결되지 않았습니다. 교수님이 설정을 마친 뒤 다시 제출해 주세요. (고른 답은 저장되어 있습니다)'); return; }
+    const st = LS.get('student');
+    $app.innerHTML = '<div class="spin"></div><p class="muted" style="text-align:center">채점 중입니다…</p>';
+    try {
+      const r = await fetch(window.ENDPOINT, { method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify({ w: q.id, sid: st.sid, name: st.name, answers: d.ans }) });
+      const res = await r.json();
+      if (!res.ok) throw new Error(res.error || '제출 실패');
+      const done = LS.get('done', {}); done[q.id] = { score: res.score, at: Date.now() }; LS.set('done', done);
+      LS.set('res_' + q.id, { ans: d.ans, res });
+      LS.del('draft_' + q.id);
+      viewResult(q, d.ans, res);
+    } catch (e) {
+      $app.innerHTML = `<div class="banner err">제출하지 못했습니다: ${esc(e.message)}<br>인터넷 연결을 확인하고 다시 시도하세요. 고른 답은 저장되어 있습니다.</div><button class="btn" id="rt">다시 시도</button>`;
+      document.getElementById('rt').onclick = () => viewSolve(q);
+    }
+  }
+  draw();
+}
+
+/* ---------- 결과 ---------- */
+function viewSavedResult(q){
+  const s = LS.get('res_' + q.id, null);
+  if (!s) { location.hash = '#/q/' + q.id; return; }
+  viewResult(q, s.ans, s.res);
+}
+function viewResult(q, ans, res){
+  header(q.title + ' 결과', true);
+  const wrong = res.result.map((ok, i) => ok ? null : i).filter(x => x !== null);
+  $app.innerHTML = `
+    <div class="card score"><div class="big">${res.score}<small>점</small></div>
+      <p class="muted">${res.total}문항 중 ${res.correct}문항 정답 · ${res.attempt}번째 응시</p>
+      ${wrong.length ? `<p style="margin:0">틀린 문항: ${wrong.map(i => i + 1).join(', ')}번</p>` : '<p style="margin:0">모두 맞혔습니다! 👏</p>'}
+    </div>
+    <div class="row"><button class="btn sec" id="onlyx">틀린 문항만 보기</button><button class="btn sec" id="retry">다시 풀기</button></div>
+    <h2>문항별 해설</h2>
+    <div id="list"></div>
+    <button class="btn" style="margin-top:18px" onclick="location.hash='#/'">목록으로</button>`;
+  let only = false;
+  function list(){
+    document.getElementById('list').innerHTML = q.items.map((it, i) => {
+      const ok = res.result[i]; if (only && ok) return '';
+      return `<div class="card res ${ok ? '' : 'x'}">
+        <div class="h"><span class="mark ${ok ? 'o' : 'x'}">${ok ? '정답' : '오답'}</span>${i + 1}번</div>
+        <div>${esc(it.q)}</div>
+        <div class="ans">내 답: ${CIRC[ans[i] - 1]} ${esc(it.o[ans[i] - 1])}${ok ? '' : `<br><b>정답: ${CIRC[res.key[i] - 1]} ${esc(it.o[res.key[i] - 1])}</b>`}</div>
+        <div class="exp">${esc(res.explain[i])}</div>
+        ${res.ref && res.ref[i] ? `<span class="ref">📖 ${esc(res.ref[i])}</span>` : ''}
+      </div>`; }).join('');
+  }
+  list();
+  document.getElementById('onlyx').onclick = e => { only = !only; e.target.textContent = only ? '전체 문항 보기' : '틀린 문항만 보기'; list(); };
+  document.getElementById('retry').onclick = () => {
+    if (confirm('다시 풀까요? 새 응시로 기록됩니다(교수님 통계는 첫 응시 기준).')) { LS.del('draft_' + q.id); location.hash = '#/solve/' + q.id; }
+  };
+}
+
+/* ---------- 교수용 대시보드 (#/admin) ---------- */
+async function viewAdmin(){
+  header('교수용 대시보드', true);
+  if (!connected()) { $app.innerHTML = '<div class="banner err">config.js에 Apps Script 웹 앱 URL이 아직 없습니다.</div>'; return; }
+  const key = sessionStorage.getItem('cn3_admin') || '';
+  if (!key) {
+    $app.innerHTML = `<h1>교수용 대시보드</h1><div class="card"><label>비밀번호 (Code.gs의 ADMIN_PASSWORD)</label><input id="pw" type="password"><button class="btn" id="ok">확인</button></div>`;
+    document.getElementById('ok').onclick = () => { sessionStorage.setItem('cn3_admin', document.getElementById('pw').value); viewAdmin(); };
+    return;
+  }
+  $app.innerHTML = '<div class="spin"></div>';
+  let data;
+  try {
+    const r = await fetch(window.ENDPOINT + '?action=dashboard&key=' + encodeURIComponent(key));
+    const j = await r.json(); if (!j.ok) throw new Error(j.error); data = j.data;
+  } catch (e) {
+    sessionStorage.removeItem('cn3_admin');
+    $app.innerHTML = `<div class="banner err">${esc(e.message)}</div><button class="btn" onclick="viewAdmin()">다시 입력</button>`; return;
+  }
+  const ids = Object.keys(data);
+  $app.innerHTML = `
+    <div class="row"><select id="sel">${ids.map(k => `<option value="${k}">${esc(data[k].title)} (${data[k].rows.length}건)</option>`).join('')}</select></div>
+    <div id="dash"></div>
+    <div class="row" style="margin-top:14px"><button class="btn sec" id="csv">CSV 내려받기</button><button class="btn sec" id="rf">새로고침</button></div>`;
+  const sel = document.getElementById('sel');
+  function draw(){
+    const q = data[sel.value], first = q.rows.filter(r => r.attempt === 1), sc = first.map(r => r.score);
+    const avg = sc.length ? (sc.reduce((a, b) => a + b, 0) / sc.length).toFixed(1) : '-';
+    const rate = Array.from({length: q.n}, (_, i) => first.length ? Math.round(first.filter(r => r.ox[i] === 'O').length / first.length * 100) : null);
+    document.getElementById('dash').innerHTML = `
+      <div class="stats">
+        <div class="stat"><b>${first.length}</b>응시</div><div class="stat"><b>${avg}</b>평균</div>
+        <div class="stat"><b>${sc.length ? Math.max(...sc) : '-'}</b>최고</div><div class="stat"><b>${sc.length ? Math.min(...sc) : '-'}</b>최저</div>
+      </div>
+      <h2>문항별 정답률 <span class="muted">(첫 응시 기준 · 빨간색 60% 미만)</span></h2>
+      <div class="bars">${rate.map((v, i) => `<div class="bar ${v !== null && v < 60 ? 'low' : ''}">Q${i + 1}<b>${v === null ? '-' : v + '%'}</b></div>`).join('')}</div>
+      <h2>제출 목록 <span class="muted">(최근 순)</span></h2>
+      <div class="tbl"><table><tr><th>제출시각</th><th>학번</th><th>이름</th><th>점수</th><th>차수</th><th>틀린 문항</th></tr>
+      ${q.rows.slice().reverse().map(r => `<tr><td>${new Date(r.at).toLocaleString('ko-KR', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'})}</td><td>${esc(r.sid)}</td><td>${esc(r.name)}</td><td><b>${r.score}</b></td><td>${r.attempt}</td><td>${r.ox.map((x, i) => x === 'X' ? i + 1 : null).filter(Boolean).join(', ')}</td></tr>`).join('')}
+      </table></div>`;
+  }
+  sel.onchange = draw; draw();
+  document.getElementById('rf').onclick = viewAdmin;
+  document.getElementById('csv').onclick = () => {
+    const q = data[sel.value];
+    const head = ['제출시각', '학번', '이름', '점수', '정답수', '차수'].concat(Array.from({length: q.n}, (_, i) => 'Q' + (i + 1)));
+    const lines = [head].concat(q.rows.map(r => [r.at, r.sid, r.name, r.score, r.correct, r.attempt].concat(r.ox)));
+    const csv = '\ufeff' + lines.map(l => l.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+    a.download = q.title + '_결과.csv'; a.click();
+  };
+}
+
+route();
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
